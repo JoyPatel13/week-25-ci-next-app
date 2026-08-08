@@ -2,7 +2,7 @@ name: Deploy to staging
 on:
   push:
     branches:
-      -"main"
+      - "main"
 
 jobs:
 
@@ -11,16 +11,15 @@ jobs:
     name: Deploying everything to staging
 
     steps:
-      name : SSH into server
-      run : |
-        echo ${{secrets.SSH_PRIVATE_KEY}} &> ~/ssh_key
-        ssh -i ~/ssh_key root@92.38.147.122
-        cd week-25-ci-next-app/ && git pull
-        pnpm install
-        pnpm run build
-        pm2 restart fe-server
-        pm2 restart http-server
-        pm2 restart ws-server
+      - run : |
+          echo ${{secrets.SSH_PRIVATE_KEY}} &> ~/ssh_key
+          ssh -i ~/ssh_key root@92.38.147.122
+          cd week-25-ci-next-app/ && git pull
+          pnpm install
+          pnpm run build
+          pm2 restart fe-server
+          pm2 restart http-server
+          pm2 restart ws-server
 
 
 
